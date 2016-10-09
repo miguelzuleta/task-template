@@ -53,8 +53,8 @@ gulp.task('include', function(){
 })
 
 gulp.task('sass-lint', function(){
-	// gulp.src('site/components/sass/*.scss')
-	// 	.pipe(scssLint())
+	gulp.src('site/components/sass/*.scss')
+		.pipe(scssLint())
 });
 
 gulp.task('js-hint', function(){
@@ -78,8 +78,8 @@ gulp.task('sass', function(){
 
 gulp.task('js', function(){
 	gulp.src([
-		'site/components/js/keyframes.js',
-		'site/components/js/battle.js'
+		'site/components/js/script1.js',
+		'site/components/js/script2.js'
 	])
 		.pipe(concat('js.js'))
 		.pipe(gIF(env !== 'envDev', uglify()))
