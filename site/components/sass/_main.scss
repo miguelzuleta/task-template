@@ -1,5 +1,17 @@
 div{
-  width: 300px;
-  height: 300px;
-  @include e($color1, $color2);
+	@include colors($color1, $color2);
+	@include center();
+	padding: 25px 40px;
+
+	*{
+		text-align: center;
+	}
+
+	h1{
+		@include font($font1, 800, 30px);
+	}
+
+	p{
+		@include font($font1, 300, 20px);
+	}
 }

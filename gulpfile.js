@@ -40,10 +40,18 @@ gulp.task('haml', function(){
 		  trace: true
 		}))
 		.pipe(gulp.dest('site/components/haml/processed'));
+
+	gulp.src('site/components/haml/processed/*.html')
+		.pipe(include())
+		.pipe(gIF(env !== 'envDev', htmlmin({
+			collapseWhitespace: true
+		})))
+		.pipe(gulp.dest(dir))
+		.pipe(connect.reload());
 });
 
 gulp.task('include', function(){
-	gulp.src('site/components/haml/processed/index.html')
+	gulp.src('site/components/haml/processed/*.html')
 		.pipe(include())
 		.pipe(gIF(env !== 'envDev', htmlmin({
 			collapseWhitespace: true
@@ -87,7 +95,7 @@ gulp.task('js', function(){
 });
 
 gulp.task('partials', function(){
-	gulp.src(dir + '/index.html')
+	gulp.src(dir + '/*.*')
 		.pipe(connect.reload());
 });
 

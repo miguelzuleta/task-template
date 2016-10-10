@@ -1,0 +1,1 @@
+function func1(n,c){console.log("func1: "+n*c)}function func2(){for(var n=0,c=0;n<arguments.length;n++)c+=arguments[n];console.log("func2: "+c)}func1(2,7),func2(5,6,7,8,9);
