@@ -10,7 +10,7 @@ var gulp = require('gulp'),
 	autoprefixer = require('gulp-autoprefixer'),
 	jsLint = require('gulp-jshint'),
 	jsStylish = require('jshint-stylish'),
-	include       = require("gulp-include");
+	include = require("gulp-include");
 
 var env = process.env.NODE_ENV || 'envDev',
 	dir,
@@ -53,8 +53,8 @@ gulp.task('include', function(){
 })
 
 gulp.task('sass-lint', function(){
-	gulp.src('site/components/sass/*.scss')
-		.pipe(scssLint())
+	// gulp.src('site/components/sass/*.scss')
+	// 	.pipe(scssLint())
 });
 
 gulp.task('js-hint', function(){
