@@ -38,7 +38,7 @@ gulp.task('haml', function(){
 	gulp.src('site/components/haml/raw/**/*.haml')
 		.pipe(haml({
 		  trace: true
-		}))
+		}).on('error', function(e) { console.log(e.message); }))
 		.pipe(gulp.dest('site/components/haml/processed'));
 
 	gulp.src('site/components/haml/processed/*.html')
