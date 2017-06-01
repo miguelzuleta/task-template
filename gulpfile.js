@@ -10,7 +10,13 @@ var gulp         = require('gulp'),
 	autoprefixer = require('gulp-autoprefixer'),
 	jsLint       = require('gulp-jshint'),
 	include      = require("gulp-include"),
-	jsStylish    = require('jshint-stylish');
+	rename      = require("gulp-rename"),
+	jsStylish    = require('jshint-stylish'),
+	browserify   = require('browserify'),
+	buffer       = require('vinyl-buffer'),
+	source       = require('vinyl-source-stream'),
+	babelify     = require('babelify')
+	// babel        = require('babel');
 
 var env = process.env.NODE_ENV || 'envDev',
 	dir,
@@ -18,11 +24,11 @@ var env = process.env.NODE_ENV || 'envDev',
 	cssComments;
 
 if(env === 'envDev'){
-	dir = 'site/dev';
+	dir = './site/dev';
 	cssOutput = 'expanded';
 	cssComments = true;
 } else{
-	dir = 'site/prod';
+	dir = './site/prod';
 	cssOutput = 'compressed';
 	cssComments = false;
 }
@@ -67,7 +73,9 @@ gulp.task('sass-lint', function(){
 
 gulp.task('js-hint', function(){
 	return gulp.src(['site/components/js/*.js'])
-		.pipe(jsLint())
+		.pipe(jsLint({
+			esversion: 6
+		}))
 		.pipe(jsLint.reporter(jsStylish))
 });
 
@@ -81,18 +89,31 @@ gulp.task('sass', function(){
 			browsers: ['last 5 versions'],
 			cascade: false
 		}))
-		.pipe(gulp.dest(dir));
+		.pipe(gulp.dest('./site/dev'));
 });
 
-gulp.task('js', function(){
-	gulp.src([
-		'site/components/js/script1.js',
-		'site/components/js/script2.js'
-	])
-		.pipe(concat('js.js'))
-		.pipe(gIF(env !== 'envDev', uglify()))
-		.pipe(gulp.dest(dir))
-});
+// gulp.task('js', function(){
+// 	gulp.src([
+// 		'site/components/js/script1.js',
+// 		'site/components/js/script2.js'
+// 	])
+// 		.pipe(concat('js.js'))
+// 		.pipe(gIF(env !== 'envDev', uglify()))
+// 		.pipe(gulp.dest(dir))
+// });
+
+gulp.task('js', function() {
+	browserify('site/components/js/main.js')
+		.transform(babelify, {
+			presets: [ 'es2015' ]
+		})
+		.bundle()
+		.pipe(source('site/components/js/main.js'))
+		.pipe(buffer())
+		.pipe(rename('js.js'))
+		.pipe(gulp.dest('./site/dev'))
+})
+
 
 gulp.task('partials', function(){
 	gulp.src(dir + '/*.*')

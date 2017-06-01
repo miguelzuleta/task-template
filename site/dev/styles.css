@@ -1,5 +1,5 @@
 @import 'https://fonts.googleapis.com/css?family=Exo+2:300,800';
-/* line 1, /Users/migzulet/Documents/stuff/resources/training/tests/gulp-tests/task-template/site/components/sass/_main.scss */
+/* line 1, /Users/migzulet/Desktop/task-template/site/components/sass/_main.scss */
 div {
   background-color: whitesmoke;
   border: 10px solid #f0f0f0;
@@ -12,19 +12,19 @@ div {
   padding: 25px 40px;
 }
 
-/* line 6, /Users/migzulet/Documents/stuff/resources/training/tests/gulp-tests/task-template/site/components/sass/_main.scss */
+/* line 6, /Users/migzulet/Desktop/task-template/site/components/sass/_main.scss */
 div * {
   text-align: center;
 }
 
-/* line 10, /Users/migzulet/Documents/stuff/resources/training/tests/gulp-tests/task-template/site/components/sass/_main.scss */
+/* line 10, /Users/migzulet/Desktop/task-template/site/components/sass/_main.scss */
 div h1 {
   font-family: "Exo 2", sans-serif;
   font-weight: 800;
   font-size: 30px;
 }
 
-/* line 14, /Users/migzulet/Documents/stuff/resources/training/tests/gulp-tests/task-template/site/components/sass/_main.scss */
+/* line 14, /Users/migzulet/Desktop/task-template/site/components/sass/_main.scss */
 div p {
   font-family: "Exo 2", sans-serif;
   font-weight: 300;

@@ -1,4 +1,9 @@
-function func1(a,b){
-  console.log('func1: ' + a * b);
+function func1(...args){
+ 
+	args.forEach((element, index) => {
+		console.log(`${index + 1} → ${element / 7}`)
+		console.log(element)
+	})
+
 }
-func1(2,7);
+func1(3, 5, 6, 8, 11);
