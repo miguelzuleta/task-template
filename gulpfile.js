@@ -103,11 +103,18 @@ gulp.task('js', function() {
 		.pipe(gulp.dest('./site/dev'))
 })
 
+
+gulp.task('partials', function(){
+	gulp.src(dir + '/*.*')
+		.pipe(connect.reload());
+});
+
 gulp.task('watch', function(){
 	gulp.watch('site/components/sass/*.scss', ['sass']);
 	gulp.watch('site/components/haml/raw/**/*.haml', ['haml']);
 	gulp.watch('site/components/haml/processed/**/*.html', ['include']);
 	gulp.watch('site/components/js/*.js', ['js', 'js-hint']);
+	gulp.watch(dir + '/*.*', ['partials']);
 });
 
 gulp.task('default', ['haml', 'include', 'sass', 'js', 'js-hint', 'connect', 'watch']);
