@@ -6,4 +6,4 @@ function func1(...args){
 	})
 
 }
-func1(3, 5, 6, 8, 11);
+func1(3, 5, 6, 89, 11);

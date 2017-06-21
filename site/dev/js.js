@@ -24,11 +24,11 @@ function func1() {
 		console.log(element);
 	});
 }
-func1(3, 5, 6, 8, 11);
+func1(3, 5, 6, 89, 11);
 
 },{}],3:[function(require,module,exports){
 'use strict';
 
-console.log('yadda');
+console.log('yadd kj nkjn kjn a');
 
 },{}]},{},[1]);
