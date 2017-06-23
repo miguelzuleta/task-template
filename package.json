@@ -27,6 +27,7 @@
     "gulp-ruby-haml": "0.0.9",
     "gulp-sass": "^2.3.2",
     "gulp-scss-lint": "^0.4.0",
+    "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.3",

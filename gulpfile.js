@@ -15,7 +15,8 @@ var gulp         = require('gulp'),
 	browserify   = require('browserify'),
 	buffer       = require('vinyl-buffer'),
 	source       = require('vinyl-source-stream'),
-	babelify     = require('babelify')
+	babelify     = require('babelify'),
+	sourcemaps   = require('gulp-sourcemaps')
 
 var env = process.env.NODE_ENV || 'envDev',
 	dir,
@@ -80,19 +81,21 @@ gulp.task('js-hint', function(){
 
 gulp.task('sass', function(){
 	gulp.src('site/components/sass/styles.scss')
-		.pipe(sass({
-			outputStyle: cssOutput,
-			sourceComments: cssComments
-		}).on('error', sass.logError))
-		.pipe(autoprefixer({
-			browsers: ['last 5 versions'],
-			cascade: false
-		}))
+		.pipe(sourcemaps.init())
+			.pipe(sass({
+				outputStyle: cssOutput,
+				sourceComments: cssComments
+			}).on('error', sass.logError))
+			.pipe(autoprefixer({
+				browsers: ['last 5 versions'],
+				cascade: false
+			}))
+		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('./site/dev'));
 });
 
 gulp.task('js', function() {
-	browserify('site/components/js/main.js')
+	browserify('site/components/js/main.js', { debug: true })
 		.transform(babelify, {
 			presets: [ 'es2015' ]
 		})
