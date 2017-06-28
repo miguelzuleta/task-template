@@ -7,7 +7,7 @@ var gulp         = require('gulp'),
 	uglify       = require('gulp-uglify'),
 	scssLint     = require('gulp-scss-lint'),
 	autoprefixer = require('gulp-autoprefixer'),
-	jsLint       = require('gulp-jshint'),
+	eslint       = require('gulp-eslint'),
 	include      = require("gulp-include"),
 	rename       = require("gulp-rename"),
 	jsStylish    = require('jshint-stylish'),
@@ -55,12 +55,22 @@ gulp.task('sass-lint', function(){
 		.pipe(scssLint())
 });
 
-gulp.task('js-hint', function(){
-	return gulp.src(['site/components/js/*.js'])
-		.pipe(jsLint({
-			esversion: 6
+gulp.task('lint', function(){
+	return gulp.src(['site/components/js/*.js', '!node_modules/**'])
+		.pipe(eslint({
+	    "parserOptions": {
+	        "ecmaVersion": 6,
+	        "sourceType": "module",
+	        "ecmaFeatures": {
+	            "jsx": true
+	        }
+	    },
+	    "rules": {
+	        "no-extra-semi": "error"
+	    }
 		}))
-		.pipe(jsLint.reporter(jsStylish))
+		.pipe(eslint.format())
+		.pipe(eslint.failAfterError())
 });
 
 gulp.task('sass', function(){
@@ -75,7 +85,8 @@ gulp.task('sass', function(){
 				cascade: false
 			}))
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest('./site/dev'));
+		.pipe(gulp.dest('./site/dev'))
+		.pipe(connect.reload());
 });
 
 gulp.task('js', function() {
@@ -88,19 +99,13 @@ gulp.task('js', function() {
 		.pipe(buffer())
 		.pipe(rename('js.js'))
 		.pipe(gulp.dest('./site/dev'))
-})
-
-
-gulp.task('partials', function(){
-	gulp.src(dir + '/*.*')
 		.pipe(connect.reload());
-});
+})
 
 gulp.task('watch', function(){
 	gulp.watch('site/components/sass/*.scss', ['sass']);
 	gulp.watch('site/components/html/**/*.html', ['html']);
-	gulp.watch('site/components/js/*.js', ['js', 'js-hint']);
-	gulp.watch(dir + '/*.*', ['partials']);
+	gulp.watch('site/components/js/*.js', ['js', 'lint']);
 });
 
-gulp.task('default', ['html', 'sass', 'js', 'js-hint', 'connect', 'watch']);
+gulp.task('default', ['html', 'sass', 'js', 'lint', 'connect', 'watch']);
