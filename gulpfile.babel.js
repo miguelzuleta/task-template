@@ -18,19 +18,21 @@ const babelify     = require('babelify')
 const sourcemaps   = require('gulp-sourcemaps')
 const argv         = require('yargs').argv
 
-let env = process.env.NODE_ENV || 'envDev',
-	dir,
-	cssOutput,
-	cssComments
+let dir
+let cssOutput
+let cssComments
+let minifyHMTL
 
-if(env === 'envDev'){
+if (argv.dev) {
 	dir = './site/dev'
 	cssOutput = 'expanded'
 	cssComments = true
-} else{
+	minifyHMTL = false
+} else if (argv.prod) {
 	dir = './site/prod'
 	cssOutput = 'compressed'
 	cssComments = false
+	minifyHMTL = true
 }
 
 gulp.task('connect', () => {
@@ -43,9 +45,9 @@ gulp.task('connect', () => {
 gulp.task('html', () => {
 	gulp.src('site/components/html/*.html')
 		.pipe(include())
-		.pipe(gIF(env !== 'envDev', htmlmin({
-			collapseWhitespace: true
-		})))
+		.pipe(htmlmin({
+			collapseWhitespace: minifyHMTL
+		}))
 		.pipe(gulp.dest(dir))
 		.pipe(connect.reload())
 })
@@ -58,16 +60,16 @@ gulp.task('sass-lint', () => {
 gulp.task('lint', () => {
 	return gulp.src(['site/components/js/*.js', '!node_modules/**'])
 		.pipe(eslint({
-	    "parserOptions": {
-	        "ecmaVersion": 6,
-	        "sourceType": "module",
-	        "ecmaFeatures": {
-	            "jsx": true
-	        }
-	    },
-	    "rules": {
-	        "no-extra-semi": "error"
-	    }
+		    "parserOptions": {
+		        "ecmaVersion": 6,
+		        "sourceType": "module",
+		        "ecmaFeatures": {
+		            "jsx": true
+		        }
+		    },
+		    "rules": {
+		        "no-extra-semi": "error"
+		    }
 		}))
 		.pipe(eslint.format())
 		.pipe(eslint.failAfterError())
@@ -85,7 +87,7 @@ gulp.task('sass', () => {
 				cascade: false
 			}))
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest('./site/dev'))
+		.pipe(gulp.dest(dir))
 		.pipe(connect.reload())
 })
 
@@ -98,14 +100,16 @@ gulp.task('js', () =>  {
 		.pipe(source('site/components/js/main.js'))
 		.pipe(buffer())
 		.pipe(rename('js.js'))
-		.pipe(gulp.dest('./site/dev'))
+		.pipe(gulp.dest(dir))
 		.pipe(connect.reload())
 })
 
-gulp.task('watch', () => {
-	gulp.watch('site/components/sass/*.scss', ['sass'])
-	gulp.watch('site/components/html/**/*.html', ['html'])
-	gulp.watch('site/components/js/*.js', ['js', 'lint'])
-})
+if (argv.watch) {
+	gulp.task('watch', () => {
+		gulp.watch('site/components/sass/*.scss', ['sass'])
+		gulp.watch('site/components/html/**/*.html', ['html'])
+		gulp.watch('site/components/js/*.js', ['js', 'lint'])
+	})
+}
 
-gulp.task('default', ['html', 'sass', 'js', 'lint', 'connect', 'watch'])
+gulp.task('default', ['html', 'sass', 'js', 'lint', 'connect'])
