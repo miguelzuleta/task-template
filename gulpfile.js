@@ -1,5 +1,4 @@
 var gulp         = require('gulp'),
-	haml         = require('gulp-ruby-haml'),
 	htmlmin      = require('gulp-htmlmin'),
 	sass         = require('gulp-sass'),
 	concat       = require('gulp-concat'),
@@ -16,7 +15,8 @@ var gulp         = require('gulp'),
 	buffer       = require('vinyl-buffer'),
 	source       = require('vinyl-source-stream'),
 	babelify     = require('babelify'),
-	sourcemaps   = require('gulp-sourcemaps')
+	sourcemaps   = require('gulp-sourcemaps'),
+	argv         = require('yargs').argv
 
 var env = process.env.NODE_ENV || 'envDev',
 	dir,
@@ -40,24 +40,8 @@ gulp.task('connect', function(){
 	});
 });
 
-gulp.task('haml', function(){
-	gulp.src('site/components/haml/raw/**/*.haml')
-		.pipe(haml({
-		  trace: true
-		}).on('error', function(e) { console.log(e.message); }))
-		.pipe(gulp.dest('site/components/haml/processed'));
-
-	gulp.src('site/components/haml/processed/*.html')
-		.pipe(include())
-		.pipe(gIF(env !== 'envDev', htmlmin({
-			collapseWhitespace: true
-		})))
-		.pipe(gulp.dest(dir))
-		.pipe(connect.reload());
-});
-
-gulp.task('include', function(){
-	gulp.src('site/components/haml/processed/*.html')
+gulp.task('html', function(){
+	gulp.src('site/components/html/*.html')
 		.pipe(include())
 		.pipe(gIF(env !== 'envDev', htmlmin({
 			collapseWhitespace: true
@@ -114,10 +98,9 @@ gulp.task('partials', function(){
 
 gulp.task('watch', function(){
 	gulp.watch('site/components/sass/*.scss', ['sass']);
-	gulp.watch('site/components/haml/raw/**/*.haml', ['haml']);
-	gulp.watch('site/components/haml/processed/**/*.html', ['include']);
+	gulp.watch('site/components/html/**/*.html', ['html']);
 	gulp.watch('site/components/js/*.js', ['js', 'js-hint']);
 	gulp.watch(dir + '/*.*', ['partials']);
 });
 
-gulp.task('default', ['haml', 'include', 'sass', 'js', 'js-hint', 'connect', 'watch']);
+gulp.task('default', ['html', 'sass', 'js', 'js-hint', 'connect', 'watch']);
