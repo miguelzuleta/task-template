@@ -18,21 +18,21 @@ const babelify     = require('babelify')
 const sourcemaps   = require('gulp-sourcemaps')
 const argv         = require('yargs').argv
 
-let dir
-let cssOutput
-let cssComments
-let minifyHMTL
+let dir = './site/dev'
+let cssOutput = 'expanded'
+let cssComments = true
+let minifyHMTL = false
+let runWatch = []
 
-if (argv.dev) {
-	dir = './site/dev'
-	cssOutput = 'expanded'
-	cssComments = true
-	minifyHMTL = false
-} else if (argv.prod) {
+if (argv.prod) {
 	dir = './site/prod'
 	cssOutput = 'compressed'
 	cssComments = false
 	minifyHMTL = true
+}
+
+if (argv.watch) {
+	runWatch = ['watch']
 }
 
 gulp.task('connect', () => {
@@ -104,12 +104,10 @@ gulp.task('js', () =>  {
 		.pipe(connect.reload())
 })
 
-if (argv.watch) {
-	gulp.task('watch', () => {
-		gulp.watch('site/components/sass/*.scss', ['sass'])
-		gulp.watch('site/components/html/**/*.html', ['html'])
-		gulp.watch('site/components/js/*.js', ['js', 'lint'])
-	})
-}
+gulp.task('watch', () => {
+	gulp.watch('site/components/sass/*.scss', ['sass'])
+	gulp.watch('site/components/html/**/*.html', ['html'])
+	gulp.watch('site/components/js/*.js', ['js', 'lint'])
+})
 
-gulp.task('default', ['html', 'sass', 'js', 'lint', 'connect'])
+gulp.task('default', ['html', 'sass', 'js', 'lint', 'connect', ...runWatch])
