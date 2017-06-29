@@ -1,22 +1,24 @@
-const gulp         = require('gulp')
-const htmlmin      = require('gulp-htmlmin')
-const sass         = require('gulp-sass')
-const concat       = require('gulp-concat')
-const connect      = require('gulp-connect')
-const gIF          = require('gulp-if')
-const uglify       = require('gulp-uglify')
-const scssLint     = require('gulp-scss-lint')
-const autoprefixer = require('gulp-autoprefixer')
-const eslint       = require('gulp-eslint')
-const include      = require("gulp-include")
-const rename       = require("gulp-rename")
-const jsStylish    = require('jshint-stylish')
-const browserify   = require('browserify')
-const buffer       = require('vinyl-buffer')
-const source       = require('vinyl-source-stream')
-const babelify     = require('babelify')
-const sourcemaps   = require('gulp-sourcemaps')
-const argv         = require('yargs').argv
+'use strict'
+
+import gulp         from 'gulp'
+import htmlmin      from 'gulp-htmlmin'
+import sass         from 'gulp-sass'
+import concat       from 'gulp-concat'
+import connect      from 'gulp-connect'
+import gIF          from 'gulp-if'
+import uglify       from 'gulp-uglify'
+import scssLint     from 'gulp-scss-lint'
+import autoprefixer from 'gulp-autoprefixer'
+import eslint       from 'gulp-eslint'
+import include      from "gulp-include"
+import rename       from "gulp-rename"
+import jsStylish    from 'jshint-stylish'
+import browserify   from 'browserify'
+import buffer       from 'vinyl-buffer'
+import source       from 'vinyl-source-stream'
+import babelify     from 'babelify'
+import sourcemaps   from 'gulp-sourcemaps'
+import { argv }     from 'yargs'
 
 let dir = './site/dev'
 let cssOutput = 'expanded'
