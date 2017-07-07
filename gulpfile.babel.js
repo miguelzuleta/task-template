@@ -12,12 +12,13 @@ import autoprefixer from 'gulp-autoprefixer'
 import eslint       from 'gulp-eslint'
 import include      from "gulp-include"
 import rename       from "gulp-rename"
+import sourcemaps   from 'gulp-sourcemaps'
+
 import jsStylish    from 'jshint-stylish'
 import browserify   from 'browserify'
 import buffer       from 'vinyl-buffer'
 import source       from 'vinyl-source-stream'
 import babelify     from 'babelify'
-import sourcemaps   from 'gulp-sourcemaps'
 import { argv }     from 'yargs'
 
 let dir = './site/dev'
@@ -107,6 +108,7 @@ gulp.task('js', () =>  {
 })
 
 gulp.task('watch', () => {
+	console.log('\n\nWatching for changes...\n\n')
 	gulp.watch('site/components/sass/*.scss', ['sass'])
 	gulp.watch('site/components/html/**/*.html', ['html'])
 	gulp.watch('site/components/js/*.js', ['js', 'lint'])
