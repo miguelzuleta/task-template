@@ -5,7 +5,7 @@ import htmlmin      from 'gulp-htmlmin'
 import sass         from 'gulp-sass'
 import concat       from 'gulp-concat'
 import connect      from 'gulp-connect'
-import gIF          from 'gulp-if'
+import gulpif          from 'gulp-if'
 import uglify       from 'gulp-uglify'
 import scssLint     from 'gulp-scss-lint'
 import autoprefixer from 'gulp-autoprefixer'
@@ -24,6 +24,7 @@ import { argv }     from 'yargs'
 let dir = './site/dev'
 let cssOutput = 'expanded'
 let cssComments = true
+let showSourcemaps = true
 let minifyHMTL = false
 let runWatch = []
 
@@ -31,6 +32,7 @@ if (argv.prod) {
 	dir = './site/prod'
 	cssOutput = 'compressed'
 	cssComments = false
+	showSourcemaps = false
 	minifyHMTL = true
 }
 
@@ -63,16 +65,16 @@ gulp.task('sass-lint', () => {
 gulp.task('lint', () => {
 	return gulp.src(['site/components/js/*.js', '!node_modules/**'])
 		.pipe(eslint({
-		    "parserOptions": {
-		        "ecmaVersion": 6,
-		        "sourceType": "module",
-		        "ecmaFeatures": {
-		            "jsx": true
-		        }
-		    },
-		    "rules": {
-		        "no-extra-semi": "error"
-		    }
+			"parserOptions": {
+				"ecmaVersion": 6,
+				"sourceType": "module",
+				"ecmaFeatures": {
+					"jsx": true
+				}
+			},
+			"rules": {
+				"no-extra-semi": "error"
+			}
 		}))
 		.pipe(eslint.format())
 		.pipe(eslint.failAfterError())
@@ -80,7 +82,7 @@ gulp.task('lint', () => {
 
 gulp.task('sass', () => {
 	gulp.src('site/components/sass/styles.scss')
-		.pipe(sourcemaps.init())
+		.pipe(gulpif(showSourcemaps, sourcemaps.init()))
 			.pipe(sass({
 				outputStyle: cssOutput,
 				sourceComments: cssComments
@@ -89,7 +91,7 @@ gulp.task('sass', () => {
 				browsers: ['last 5 versions'],
 				cascade: false
 			}))
-		.pipe(sourcemaps.write())
+		.pipe(gulpif(showSourcemaps, sourcemaps.write()))
 		.pipe(gulp.dest(dir))
 		.pipe(connect.reload())
 })
@@ -103,6 +105,9 @@ gulp.task('js', () =>  {
 		.pipe(source('site/components/js/main.js'))
 		.pipe(buffer())
 		.pipe(rename('js.js'))
+		.pipe(sourcemaps.init({loadMaps: showSourcemaps}))
+			.pipe(gulpif(argv.prod, uglify()))
+		.pipe(gulpif(showSourcemaps, sourcemaps.write()))
 		.pipe(gulp.dest(dir))
 		.pipe(connect.reload())
 })
