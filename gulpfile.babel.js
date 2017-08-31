@@ -32,8 +32,8 @@ if (argv.prod) {
 	dir = './site/prod'
 	cssOutput = 'compressed'
 	cssComments = false
-	showSourcemaps = false
 	minifyHMTL = true
+	showSourcemaps = false
 }
 
 if (argv.watch) {
@@ -97,7 +97,7 @@ gulp.task('sass', () => {
 })
 
 gulp.task('js', () =>  {
-	browserify('site/components/js/main.js', { debug: true })
+	browserify('site/components/js/main.js', { debug: showSourcemaps })
 		.transform(babelify, {
 			presets: [ 'es2015' ]
 		})
@@ -105,9 +105,7 @@ gulp.task('js', () =>  {
 		.pipe(source('site/components/js/main.js'))
 		.pipe(buffer())
 		.pipe(rename('js.js'))
-		.pipe(sourcemaps.init({loadMaps: showSourcemaps}))
-			.pipe(gulpif(argv.prod, uglify()))
-		.pipe(gulpif(showSourcemaps, sourcemaps.write()))
+		.pipe(gulpif(!showSourcemaps, uglify()))
 		.pipe(gulp.dest(dir))
 		.pipe(connect.reload())
 })
