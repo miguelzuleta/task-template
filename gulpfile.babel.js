@@ -20,13 +20,15 @@ import buffer       from 'vinyl-buffer'
 import source       from 'vinyl-source-stream'
 import babelify     from 'babelify'
 import { argv }     from 'yargs'
+import fs           from 'fs'
 
-let dir = './site/dev'
+let dir = './site/'
 let cssOutput = 'expanded'
 let cssComments = true
 let showSourcemaps = true
 let minifyHMTL = false
 let runWatch = []
+let gitIgnoreFiles = 'node_modules\n.DS_Store'
 
 if (argv.prod) {
 	dir = './site/prod'
@@ -34,7 +36,10 @@ if (argv.prod) {
 	cssComments = false
 	minifyHMTL = true
 	showSourcemaps = false
+	gitIgnoreFiles = `${gitIgnoreFiles}\nsite`
 }
+
+fs.writeFileSync('.gitignore', gitIgnoreFiles)
 
 if (argv.watch) {
 	runWatch = ['watch']
@@ -48,7 +53,7 @@ gulp.task('connect', () => {
 })
 
 gulp.task('html', () => {
-	gulp.src('site/components/html/*.html')
+	gulp.src('components/html/*.html')
 		.pipe(include())
 		.pipe(htmlmin({
 			collapseWhitespace: minifyHMTL
@@ -58,12 +63,12 @@ gulp.task('html', () => {
 })
 
 gulp.task('sass-lint', () => {
-	gulp.src('site/components/sass/*.scss')
+	gulp.src('components/sass/*.scss')
 		.pipe(scssLint())
 })
 
 gulp.task('lint', () => {
-	return gulp.src(['site/components/js/*.js', '!node_modules/**'])
+	return gulp.src(['components/js/*.js', '!node_modules/**'])
 		.pipe(eslint({
 			"parserOptions": {
 				"ecmaVersion": 6,
@@ -81,7 +86,7 @@ gulp.task('lint', () => {
 })
 
 gulp.task('sass', () => {
-	gulp.src('site/components/sass/styles.scss')
+	gulp.src('components/sass/styles.scss')
 		.pipe(gulpif(showSourcemaps, sourcemaps.init()))
 			.pipe(sass({
 				outputStyle: cssOutput,
@@ -97,12 +102,12 @@ gulp.task('sass', () => {
 })
 
 gulp.task('js', () =>  {
-	browserify('site/components/js/main.js', { debug: showSourcemaps })
+	browserify('components/js/main.js', { debug: showSourcemaps })
 		.transform(babelify, {
 			presets: [ 'es2015' ]
 		})
 		.bundle()
-		.pipe(source('site/components/js/main.js'))
+		.pipe(source('components/js/main.js'))
 		.pipe(buffer())
 		.pipe(rename('js.js'))
 		.pipe(gulpif(!showSourcemaps, uglify()))
@@ -112,9 +117,9 @@ gulp.task('js', () =>  {
 
 gulp.task('watch', () => {
 	console.log('\n\nWatching for changes...\n\n')
-	gulp.watch('site/components/sass/*.scss', ['sass'])
-	gulp.watch('site/components/html/**/*.html', ['html'])
-	gulp.watch('site/components/js/*.js', ['js', 'lint'])
+	gulp.watch('components/sass/*.scss', ['sass'])
+	gulp.watch('components/html/**/*.html', ['html'])
+	gulp.watch('components/js/*.js', ['js', 'lint'])
 })
 
 gulp.task('default', ['html', 'sass', 'js', 'lint', 'connect', ...runWatch])
