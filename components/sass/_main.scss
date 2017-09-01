@@ -1,7 +1,7 @@
 div{
 	@include colors($color1, $color2);
 	@include center();
-	padding: 25px 40px;
+	padding: 25px 45px;
 
 	*{
 		text-align: center;
