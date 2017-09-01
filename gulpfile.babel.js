@@ -26,6 +26,7 @@ let cssOutput = 'expanded'
 let cssComments = true
 let showSourcemaps = true
 let minifyHMTL = false
+let runConnect = ['connect']
 let runWatch = []
 
 if (argv.prod) {
@@ -37,6 +38,10 @@ if (argv.prod) {
 
 if (argv.watch) {
 	runWatch = ['watch']
+}
+
+if (argv.merge) {
+	runConnect = []
 }
 
 gulp.task('connect', () => {
@@ -116,4 +121,4 @@ gulp.task('watch', () => {
 	gulp.watch('components/js/*.js', ['js', 'lint'])
 })
 
-gulp.task('default', ['html', 'sass', 'js', 'lint', 'connect', ...runWatch])
+gulp.task('default', ['html', 'sass', 'js', 'lint', ...runConnect, ...runWatch])
