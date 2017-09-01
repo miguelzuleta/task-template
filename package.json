@@ -7,7 +7,7 @@
     "start": "gulp",
     "watch": "gulp --watch",
     "prod": "gulp --prod",
-    "merge": "gulp --prod && git add . && git commit -m 'merge' && git checkout master-TEST && git checkout dev-TEST site"
+    "merge": "./merge.sh"
   },
   "author": "",
   "license": "ISC",
