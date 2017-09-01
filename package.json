@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "gulp",
-    "watch": "gulp --watch",
+    "start": "gulp --watch",
     "prod": "gulp --prod",
     "merge": "./merge.sh"
   },
