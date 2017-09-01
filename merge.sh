@@ -3,7 +3,7 @@
 gulp --prod --merge
 git add .
 git commit -m 'merge'
-git checkout master-TEST
-git checkout dev-TEST site
+git checkout master
+git checkout dev site
 mv site/* .
 rm -rf site
