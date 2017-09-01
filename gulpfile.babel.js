@@ -28,18 +28,19 @@ let cssComments = true
 let showSourcemaps = true
 let minifyHMTL = false
 let runWatch = []
-let gitIgnoreFiles = 'node_modules\n.DS_Store'
+let ignoreDevFiles = 'site'
+let ignoreProdFiles = 'node_modules\n.DS_Store'
+let ignoreFiles = `${ignoreProdFiles}\n${ignoreDevFiles}`
 
 if (argv.prod) {
-	dir = './site/prod'
 	cssOutput = 'compressed'
 	cssComments = false
 	minifyHMTL = true
 	showSourcemaps = false
-	gitIgnoreFiles = `${gitIgnoreFiles}\nsite`
+	ignoreFiles = ignoreProdFiles
 }
 
-fs.writeFileSync('.gitignore', gitIgnoreFiles)
+fs.writeFileSync('.gitignore', ignoreFiles)
 
 if (argv.watch) {
 	runWatch = ['watch']
