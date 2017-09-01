@@ -19,7 +19,9 @@ import browserify   from 'browserify'
 import buffer       from 'vinyl-buffer'
 import source       from 'vinyl-source-stream'
 import babelify     from 'babelify'
+import fs           from 'fs'
 import { argv }     from 'yargs'
+
 
 let dir = './site/'
 let cssOutput = 'expanded'
@@ -28,6 +30,10 @@ let showSourcemaps = true
 let minifyHMTL = false
 let runConnect = ['connect']
 let runWatch = []
+
+if (!fs.existsSync(dir)) {
+	fs.mkdirSync(dir)
+}
 
 if (argv.prod) {
 	cssOutput = 'compressed'
