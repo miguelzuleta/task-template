@@ -20,7 +20,6 @@ import buffer       from 'vinyl-buffer'
 import source       from 'vinyl-source-stream'
 import babelify     from 'babelify'
 import { argv }     from 'yargs'
-import fs           from 'fs'
 
 let dir = './site/'
 let cssOutput = 'expanded'
@@ -28,19 +27,13 @@ let cssComments = true
 let showSourcemaps = true
 let minifyHMTL = false
 let runWatch = []
-let ignoreDevFiles = 'site'
-let ignoreProdFiles = 'node_modules\n.DS_Store'
-let ignoreFiles = `${ignoreProdFiles}\n${ignoreDevFiles}`
 
 if (argv.prod) {
 	cssOutput = 'compressed'
 	cssComments = false
 	minifyHMTL = true
 	showSourcemaps = false
-	ignoreFiles = ignoreProdFiles
 }
-
-fs.writeFileSync('.gitignore', ignoreFiles)
 
 if (argv.watch) {
 	runWatch = ['watch']
