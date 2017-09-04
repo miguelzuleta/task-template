@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 function func1(...args){
  
 	args.forEach((element, index) => {
@@ -7,3 +10,8 @@ function func1(...args){
 
 }
 func1(3, 511, 6, 2, 21)
+
+ReactDOM.render(
+  <h1>magic!!!</h1>,
+  document.getElementById('root')
+)
