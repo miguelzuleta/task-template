@@ -33,3 +33,6 @@ rm -rf ../$tempfolder
 git add .
 git commit -m "init dev branch"
 git push --set-upstream origin dev
+
+nvm use 8
+npm install
