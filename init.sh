@@ -34,5 +34,5 @@ git add .
 git commit -m "init dev branch"
 git push --set-upstream origin dev
 
-nvm use 8
+nvm use 7
 npm install
