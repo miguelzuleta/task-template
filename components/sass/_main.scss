@@ -1,18 +1,14 @@
-div{
-	@include colors($color1, $color2);
+body {
+	background-color: $color1;
+}
+
+main{
 	@include center();
-	padding: 25px 45px;
+	padding: 20px;
+	background-color: $color2;
+	color: darken($color2);
 
-	*{
-		text-align: center;
-	}
-
-	h1{
-		@include font($font1, 800, 30px);
-		color: blue;
-	}
-
-	p{
-		@include font($font1, 300, 20px);
+	h1 {
+		font-weight: bold;
 	}
 }
