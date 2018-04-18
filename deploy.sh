@@ -1,6 +1,4 @@
-# chmod +x ./merge.sh
-
-echo "enter merge commit message"
+echo "Enter deploy commit message"
 read commitMessage
 
 function deleteInit() {
@@ -17,7 +15,7 @@ function commitToBranch() {
 	git push
 }
 
-gulp --prod --merge
+gulp --prod --deploy
 commitToBranch
 git checkout master
 

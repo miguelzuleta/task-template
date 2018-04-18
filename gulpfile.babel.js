@@ -48,7 +48,7 @@ if (argv.watch) {
 	runWatch = ['watch']
 }
 
-if (argv.merge) {
+if (argv.deploy) {
 	runConnect = []
 }
 
