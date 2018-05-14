@@ -1,4 +1,4 @@
-echo "Enter deploy commit message"
+echo "Enter merge deploy commit message"
 read commitMessage
 
 function deleteInit() {
@@ -25,3 +25,5 @@ git checkout dev site
 mv site/* .
 rm -rf site
 commitToBranch
+
+git checkout dev
