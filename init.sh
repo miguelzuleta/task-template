@@ -1,5 +1,9 @@
 tempfolder="temp-init"
 
+if git rev-parse --verify --quiet dev; then
+	git branch -D dev
+fi
+
 echo "what's the epo name?"
 read projectName
 
