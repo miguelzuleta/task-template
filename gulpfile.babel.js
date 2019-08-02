@@ -16,7 +16,6 @@ import sourcemaps   from 'gulp-sourcemaps'
 
 import jsStylish    from 'jshint-stylish'
 import browserify   from 'browserify'
-import reactify     from 'reactify'
 import watchify     from 'watchify'
 import buffer       from 'vinyl-buffer'
 import source       from 'vinyl-source-stream'
@@ -112,7 +111,7 @@ gulp.task('js', () =>  {
 	browserify({
 			entries: 'components/js/main.js',
 			debug: showSourcemaps,
-			transform: [ babelify, reactify ]
+			transform: [ babelify ]
 		})
 		.bundle()
 		.pipe(source('components/js/main.js'))
