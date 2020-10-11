@@ -9,7 +9,7 @@
     "minify:js": "minify ./built/js.js -o ./built/js.js",
     "build": "npm run build:js && npm run build:css",
     "watch": "npm run watch:js & npm run watch:css",
-    "serve": "browser-sync start -s --files 'components' --no-notify --port 1234 & npm run watch"
+    "serve": "browser-sync start -s --files 'components' --no-notify --port 1234"
   },
   "license": "ISC",
   "devDependencies": {
