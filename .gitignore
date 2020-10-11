@@ -1,4 +1,4 @@
 node_modules
 .DS_Store
-site
 npm-debug.log
+package-lock.json

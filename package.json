@@ -1,0 +1,24 @@
+{
+  "author": "Miguel Zuleta",
+  "description": "Test Env",
+  "scripts": {
+    "build:css": "node-sass --include-path scss components/scss/styles.scss built/styles.css --output-style compressed",
+    "watch:css": "npm run build:css -- --watch",
+    "build:js": "browserify ./components/js/main.js -o ./built/js.js -t [ babelify --presets [ @babel/preset-env ] ] && npm run minify:js",
+    "watch:js": "watchify ./components/js/main.js -o ./built/js.js -t [ babelify --presets [ @babel/preset-env ] ]",
+    "minify:js": "minify ./built/js.js -o ./built/js.js",
+    "build": "npm run build:js && npm run build:css",
+    "watch": "npm run watch:js & npm run watch:css",
+    "serve": "browser-sync start -s --files 'components' --no-notify --port 1234 & npm run watch"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "babel-minify": "^0.5.1",
+    "babelify": "^10.0.0",
+    "browser-sync": "^2.26.7",
+    "node-sass": "^4.14.0",
+    "watchify": "^3.11.1"
+  }
+}

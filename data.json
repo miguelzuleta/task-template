@@ -1,0 +1,76 @@
+{
+	"hero": {
+		"headline": "Miguel Zuleta",
+		"intro": "Front-end Developer"
+	},
+	"skills": {
+		"title": "Skills",
+		"list": {
+			"HTML5, Haml": 98,
+			"CSS3, Sass, Less": 96,
+			"JS ES5/6, jQuery": 85,
+			"Gulp": 80,
+			"Github": 85,
+			"Electron": 55,
+			"ReactJS": 60,
+			"NodeJS": 58,
+			"Photoshop": 90,
+			"Ping-pong": 100
+		}
+	},
+	"exp": {
+		"title": "Experience",
+		"job-1": {
+			"company": "Aeria Games",
+			"duration": {
+				"from": "12/09",
+				"to": " 03/14"
+			},
+			"title": "Senior Web Designer",
+			"description": "Responsible for the design and development of banners ads, e&#8209;mail campaigns, game sites, landing pages and branding. Accelerated design team's production process by over 500% with custom built templates, allowing a team to produce in one day what it previously took one week."
+		},
+		"job-2": {
+			"company": "Trion Worlds",
+			"duration": {
+				"from": "03/14",
+				"to": "08/15"
+			},
+			"title": "Senior Web Designer/Developer",
+			"description": "Served as the only hybrid designer/developer in the team, responsible for creating animated banner ads, email campaigns, responsive landing pages. Pioneered multi-team templates that reduced project design and front-end implementation time from ten to three days, increasing production speed three fold."
+		},
+		"job-3": {
+			"company": "Toovia",
+			"duration": {
+				"from": "08/15",
+				"to": "06/16"
+			},
+			"title": "UI Developer",
+			"description": "Lead designers establishing processes and communication practices across teams and clients during every phase of the project to ensure smooth and efficient implementation. Collaborated on company platform's web tools to enhance the client's website builder to work more efficiently on mobile devices."
+		},
+		"job-4": {
+			"company": "Apple **(via Level Studios)",
+			"duration": {
+				"from": "07/16",
+				"to": "Today"
+			},
+			"title": "Front-end Developer",
+			"description": "Developing and maintaining several marketing websites for WWDC and product launch events. Implementing internal web tools that accelerate the production process between dev and design teams. Building documentation sites that further facilitate on&#8209;boarding experience for new developers into new internal libraries."
+		}
+	},
+	"codepens": {
+		"title": "CSS Fun",
+		"pens": {
+			"WmMejR": "South Korean Flag",
+			"PezyLJ": "PI Mosaic",
+			"jrqVXO": "American Flag",
+			"JRPOpa": "CATS vs DOGS"
+		}
+	},
+	"contact": {
+		"title": "Contact",
+		"info": {
+			"LinkedIn": "https://www.linkedin.com/in/miguel-zuleta-68b1134a/",
+			"FB Messenger": "https://www.messenger.com/t/miguel.zuleta.86"
+		}
+	}
+}

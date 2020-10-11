@@ -1,0 +1,6 @@
+@mixin text() {
+	h1 {
+		font-size: 30px;
+		color: darken($color, 25%);
+	}
+}
